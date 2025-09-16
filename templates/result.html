@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url("{{ url_for('static', filename='images/b.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+
+        .box, .faq-box {
+            background: #004080;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .box {
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #0074D9;
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+
+        a:hover {
+            background-color: #005ea6;
+        }
+
+        /* FAQ Box fixed in bottom-right */
+        .faq-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .faq-box h2 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #0066cc;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            color: #fff;
+            text-align: left;
+            padding: 10px 0;
+            border: none;
+            font-size: 1em;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .faq-question:hover {
+            color: #66ccff;
+        }
+
+        .faq-answer {
+            display: none;
+            color: #cce6ff;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Centered Prediction Result Box -->
+    <div class="box">
+        <h1>{{ prediction }}</h1>
+        <a href="{{ url_for('index') }}">Back to Form</a>
+    </div>
+
+    <!-- FAQ Box Fixed at Bottom-Right -->
+    <div class="faq-box">
+        <h2>People also ask</h2>
+
+        <div class="faq-item">
+            <button class="faq-question">What does this prediction result mean?</button>
+            <div class="faq-answer">It shows the predicted risk based on your input medical data.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">How accurate is the prediction?</button>
+            <div class="faq-answer">It's based on a trained machine learning model. Always consult a doctor for confirmation.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">Can I use this for medical treatment?</button>
+            <div class="faq-answer">No. This is only a supportive tool. Always consult a healthcare professional.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">What kind of data is used?</button>
+            <div class="faq-answer">Data like blood pressure, cholesterol, heart rate, and other vital inputs.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">Is my data saved?</button>
+            <div class="faq-answer">No, this app does not store any data locally or online.</div>
+        </div>
+    </div>
+
+    <script>
+        const questions = document.querySelectorAll('.faq-question');
+        questions.forEach(q => {
+            q.addEventListener('click', () => {
+                const answer = q.nextElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+

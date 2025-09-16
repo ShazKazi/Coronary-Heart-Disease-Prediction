@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    <style>
+        
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{{ url_for('static', filename='images/blue_dil.png') }}");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 790px;
+            max-height: 1000px;
+            margin: -4px auto;
+            /* background: rgba(39, 68, 93, 0.300); */
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            padding: 9px;
+            border-radius: 40px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0 5px;
+            font-weight: normal;
+            color: whitesmoke;
+            font-size: x-large;
+        }
+
+        input {
+            text-emphasis-color: #2164a7;
+            padding: 8px;
+            border: 1px solid #000000;
+            border-radius: 15px;
+            background-color: #e9ecef54;
+            font-size: large;
+            color: #e9ecef;
+        }
+        
+        
+        button {
+/*             
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #1b86d86d;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: large; */
+            margin-top: 52px;
+            padding: 10px;
+            background-color: #28c6ffbf;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 27px;
+            max-width: 500px;
+            margin: 27px 165px;
+            backdrop-filter: blur(13px);
+
+        }
+
+
+        button:hover {
+            background-color: #f1f1f1;
+            color: black;
+            font-weight: 550;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            /* background-color: #e9ecef; */
+            background-color: rgba(255,255,255,0.8);
+            color: #222;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Heart Disease Prediction</h1>
+        <form action="/predict" method="post">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="sex">Sex (0 = Female, 1 = Male):</label>
+            <input type="number" id="sex" name="sex" required>
+
+            <label for="chest_pain">Chest Pain Type (0-3):</label>
+            <input type="number" id="chest_pain" name="chest_pain" required>
+
+            <label for="blood_pressure">Resting Blood Pressure:</label>
+            <input type="number" id="blood_pressure" name="blood_pressure" required>
+
+            <label for="cholesterol">Cholesterol:</label>
+            <input type="number" id="cholesterol" name="cholesterol" required>
+
+            <label for="fasting_sugar">Fasting Blood Sugar (0 = False, 1 = True):</label>
+            <input type="number" id="fasting_sugar" name="fasting_sugar" required>
+
+            <label for="rest_ecg">Resting ECG (0-2):</label>
+            <input type="number" id="rest_ecg" name="rest_ecg" required>
+
+            <label for="max_heart_rate">Max Heart Rate Achieved:</label>
+            <input type="number" id="max_heart_rate" name="max_heart_rate" required>
+
+            <label for="exercise_angina">Exercise Induced Angina (0 = No, 1 = Yes):</label>
+            <input type="number" id="exercise_angina" name="exercise_angina" required>
+
+            <label for="st_depression">ST Depression:</label>
+            <input type="number" id="st_depression" name="st_depression" step="any" required>
+
+            <label for="slope">Slope of the Peak Exercise ST Segment (0-2):</label>
+            <input type="number" id="slope" name="slope" required>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction %}
+        <div class="result">
+            <h3>Prediction: {{ prediction }}</h3>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
