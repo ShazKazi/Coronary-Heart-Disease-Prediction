@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import pickle
 
+
 st=pd.read_csv("Dataset\Heart_disease_statlog.csv")
 st=st.drop(['ca','thal'],axis=1)
 
