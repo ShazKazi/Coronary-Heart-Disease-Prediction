@@ -146,7 +146,7 @@
        {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="flash-message {{ category }}" style="color: #fa0505; background-size: cover; border-radius: 6px; font-style: italic; text-align: center; font-size: 25px;">
+                    <div class="flash-message {{ category }}" style="color: yellow; background-size: cover; border-radius: 6px; font-style: italic; text-align: center; font-size: 25px;">
                         {{ message }}
                     </div>
                 {% endfor %}
