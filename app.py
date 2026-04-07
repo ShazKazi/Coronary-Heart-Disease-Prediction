@@ -1,3 +1,4 @@
+import sqlite3
 import pickle
 from flask import Flask, render_template, request, redirect, url_for, session,flash
 
@@ -8,6 +9,31 @@ app.secret_key = 'your_secret_key_here'  # Replace with a strong secret key
 # Load the trained model
 with open("catboost_model.pkl", "rb") as file:
     model = pickle.load(file)
+def init_db():
+    conn = sqlite3.connect("patients.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS patients (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        age REAL,
+        sex REAL,
+        chest_pain REAL,
+        blood_pressure REAL,
+        cholesterol REAL,
+        fasting_sugar REAL,
+        rest_ecg REAL,
+        max_heart_rate REAL,
+        exercise_angina REAL,
+        st_depression REAL,
+        slope REAL,
+        prediction TEXT
+    )
+    """)
+
+    conn.commit()
+    conn.close()
 
 # Dummy user data for authentication
 users = {
@@ -75,6 +101,25 @@ def predict():
             prediction = model.predict([features])
             # Translate prediction (example: 0 = No Disease, 1 = Disease)
             result = "No Heart Disease Detected" if prediction == 0 else "Possible Heart Disease"
+            # Save to database
+            conn = sqlite3.connect("patients.db")
+            cursor = conn.cursor()
+
+            cursor.execute("""
+            INSERT INTO patients (
+            name,age, sex, chest_pain, blood_pressure, cholesterol,
+            fasting_sugar, rest_ecg, max_heart_rate, exercise_angina,
+            st_depression, slope, prediction
+            )
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
+            """, (
+            request.form.get("name"),features[0], features[1], features[2], features[3], features[4],
+            features[5], features[6], features[7], features[8],
+            features[9], features[10], result
+            ))
+
+            conn.commit()
+            conn.close()
         except Exception as e:
             result = f"Error in prediction: {e}"
 
@@ -82,4 +127,5 @@ def predict():
         return render_template("result.html", prediction=result)
 
 if __name__ == "__main__":
+    init_db()
     app.run(debug=False)
